@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Student Management System</title>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- TOP BAR -->
+
+        <div class="top-bar">
+
+            <h1>Student Dashboard</h1>
+
+            <button id="darkBtn">🌙 Dark Mode</button>
+
+        </div>
+
+        <!-- DASHBOARD CARDS -->
+
+        <div class="dashboard">
+
+            <div class="card">
+                <h3>Total Students</h3>
+                <h2 id="totalStudents">0</h2>
+            </div>
+
+            <div class="card">
+                <h3>Male</h3>
+                <h2 id="maleCount">0</h2>
+            </div>
+
+            <div class="card">
+                <h3>Female</h3>
+                <h2 id="femaleCount">0</h2>
+            </div>
+
+        </div>
+
+        <!-- FORM -->
+
+        <div class="form-section">
+
+            <form id="studentForm">
+
+                <input type="text" id="username" placeholder="Enter Username" required>
+
+                <input type="email" id="email" placeholder="Enter Email" required>
+
+                <input type="text" id="phone" placeholder="Enter Phone" required>
+
+                <select id="gender" required>
+                    <option value="">Select Gender</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+
+                <button type="submit" id="submitBtn">
+                    Save Student
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- SEARCH -->
+
+        <div class="table-section">
+
+            <div class="search-box">
+                <input type="text" id="search" placeholder="Search Student">
+            </div>
+
+            <!-- ✅ ADD THIS WRAPPER -->
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Gender</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tableBody"></tbody>
+
+                </table>
+
+            </div>
+
+            <div class="pagination">
+                <button id="prevBtn">Prev</button>
+                <span id="pageInfo">1</span>
+                <button id="nextBtn">Next</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- LOADER -->
+
+    <div id="loader" class="loader"></div>
+
+    <!-- TOAST -->
+
+    <div id="toast"></div>
+
+    <div class="charts-container">
+
+        <!-- PIE CHART -->
+
+        <div class="chart-card">
+            <h2>Gender Analysis</h2>
+            <canvas id="genderChart"></canvas>
+        </div>
+
+        <!-- BAR CHART -->
+
+        <div class="chart-card">
+            <h2>Students Category</h2>
+            <canvas id="studentChart"></canvas>
+        </div>
+
+        <!-- LINE CHART -->
+
+        <div class="chart-card full-width">
+            <h2>Student Growth Analysis</h2>
+            <canvas id="lineChart"></canvas>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
