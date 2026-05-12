@@ -1,4 +1,4 @@
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz24WtO3b010LPV_c3yl2Ycj260Dz5Pakn3-6BZyVZFReDfenYiq9d60kD4AiDzzRC1/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwKZxC2Nc_yQ_iv0dysL3KYXUwgSjnMgvuJINFul761au9-D4xseJQeWbZBHG75RRJV/exec";
 
 let genderChart;
 let studentChart;
@@ -111,9 +111,13 @@ form.addEventListener("submit", async (e) => {
 
         phone: phoneInput.value,
 
-        gender: genderInput.value
+        gender: genderInput.value,
+
+        role: "user"
 
     };
+    // 💾 SAVE USER EMAIL + ROLE IN LOCAL STORAGE
+    localStorage.setItem("userRole", "user");
 
     await fetch(WEB_APP_URL, {
 
@@ -139,6 +143,8 @@ form.addEventListener("submit", async (e) => {
 
 function renderTable() {
 
+    const role = localStorage.getItem("userRole") || "user";
+
     tableBody.innerHTML = "";
 
     let filteredStudents = students.filter(student =>
@@ -156,6 +162,8 @@ function renderTable() {
 
     paginatedStudents.forEach(student => {
 
+        let isAdmin = role === "admin";
+
         tableBody.innerHTML += `
 
       <tr>
@@ -172,16 +180,14 @@ function renderTable() {
 
         <td>
 
-          <button onclick='editStudent(${JSON.stringify(student)})'>
-            Edit
-          </button>
+                ${isAdmin ? `
+                    <button onclick='editStudent(${JSON.stringify(student)})'>Edit</button>
+                    <button onclick='deleteStudent(${student.row})'>Delete</button>
+                ` : `
+                    <span style="color:gray;">View Only</span>
+                `}
 
-          <button onclick='deleteStudent(${student.row})'>
-            Delete
-          </button>
-
-        </td>
-
+            </td>
       </tr>
 
     `;
