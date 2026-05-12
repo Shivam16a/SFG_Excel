@@ -118,6 +118,7 @@ form.addEventListener("submit", async (e) => {
     };
     // 💾 SAVE USER EMAIL + ROLE IN LOCAL STORAGE
     localStorage.setItem("userRole", "user");
+    localStorage.setItem("userEmail", emailInput.value);
 
     await fetch(WEB_APP_URL, {
 
@@ -144,6 +145,7 @@ form.addEventListener("submit", async (e) => {
 function renderTable() {
 
     const role = localStorage.getItem("userRole") || "user";
+    const userEmail = localStorage.getItem("userEmail");
 
     tableBody.innerHTML = "";
 
@@ -506,3 +508,50 @@ function renderCharts() {
     });
 
 }
+
+function validateRole() {
+
+    const currentEmail = localStorage.getItem("userEmail");
+    const localRole = localStorage.getItem("userRole") || "user";
+
+    const serverUser = students.find(s => s.email === currentEmail);
+
+    if (!serverUser) return;
+
+    // ❌ MISMATCH DETECTED
+    if (serverUser.role !== localRole) {
+
+        showWarning();
+
+    }
+}
+
+function showWarning() {
+
+    const warningBox = document.createElement("div");
+
+    warningBox.innerHTML = `
+        ⚠️ You are performing an unethical task on this platform.
+        Role mismatch detected.
+    `;
+
+    warningBox.style.position = "fixed";
+    warningBox.style.top = "20px";
+    warningBox.style.left = "50%";
+    warningBox.style.transform = "translateX(-50%)";
+    warningBox.style.background = "red";
+    warningBox.style.color = "white";
+    warningBox.style.padding = "15px";
+    warningBox.style.borderRadius = "10px";
+    warningBox.style.zIndex = "9999";
+
+    document.body.appendChild(warningBox);
+
+    // optional auto remove
+    setTimeout(() => warningBox.remove(), 5000);
+}
+
+fetchStudents().then(() => {
+    validateRole();
+});
+
